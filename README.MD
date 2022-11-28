@@ -1,6 +1,7 @@
 Frontend: 
 Mở terminal:
 `cd frontend`
+`\n`
 `npm install`
 Để tải về node_modules cho React
 `npm start` 
