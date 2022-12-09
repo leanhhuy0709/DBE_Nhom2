@@ -2,33 +2,25 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import React, {useState} from 'react'
+import React, {useState} from 'react';
+import './navigationbar.css';
 
 
-function NavigationBar() {
-    const [data, setData] = useState(null);
-      React.useEffect(() => {
-      fetch("/user")
-        .then((res) => res.json())
-        .then((data) => {setData(data.find((e) => e['username'] === localStorage.getItem('usr')))});
-      }, []);
-    
+function NavigationBar({user}) {
     return (
-    <Navbar bg="primary" expand="lg">
+    <Navbar expand="lg" className="bg-blue">
         <Container>
-            <Navbar.Brand href="/">Yuha-Web</Navbar.Brand>
+            <Navbar.Brand style={{color: "white"}} href="/">OEM</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/project">Project</Nav.Link>
-                <Nav.Link href="/activity">Activity</Nav.Link>
             </Nav>
             <Nav>
-                <Nav.Link>{data?show(data.fname) + ' ' + show(data.mname) + ' ' + show(data.lname):''}</Nav.Link>
+                <Nav.Link style={{color: "white"}}>{user?user.fname + ' ' + user.mname + ' ' + user.lname:''}</Nav.Link>
+                <Nav.Link style={{color: "white"}}>{user?user.position:''}</Nav.Link>
                 <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/user">User Info</NavDropdown.Item>
-                <NavDropdown.Item href="/login" onClick = {()=>(localStorage.removeItem('usr'))}>
+                <NavDropdown.Item href="/" onClick = {()=>(localStorage.removeItem('usr'))}>
                     {localStorage.getItem('usr') == null?'Login' : 'Logout'}
                 </NavDropdown.Item>
                 </NavDropdown>
@@ -38,12 +30,6 @@ function NavigationBar() {
     </Navbar>
 
     );
-}
-function show(e)
-{
-  if (e && e !== 'null' && e !== undefined)
-    return e;
-  return '';
 }
 
 export default NavigationBar;
