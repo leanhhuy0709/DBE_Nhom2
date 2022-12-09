@@ -1,5 +1,16 @@
-
-import {Form, Button} from 'react-bootstrap';
+import React from 'react';
+import {
+  MDBContainer,
+  MDBCol,
+  MDBRow,
+  MDBBtn,
+  MDBInput,
+  MDBCheckbox
+}
+from 'mdb-react-ui-kit';
+import {Button} from 'react-bootstrap';
+import './login.css';
+import { Navigate } from "react-router-dom";
 
 function Login() {
   function handleLogin()
@@ -7,29 +18,36 @@ function Login() {
     localStorage.clear();
     localStorage.setItem('usr', document.getElementById('usr').value);
   }
-  console.log(localStorage.getItem('usr'))
   return (
-    <Form className = 'yuha-form' method = 'post' onSubmit={handleLogin}>
-      <Form.Group className="mb-3" controlId="formBasicusername">
-        <Form.Label>Username</Form.Label>
-        <Form.Control id = 'usr' name="usr" type="username" placeholder="Enter username" />
-        <Form.Text className="text-muted">
-          We'll never share your username with anyone else.
-        </Form.Text>
-      </Form.Group>
+    <MDBContainer fluid className="p-3 my-5">
 
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control name="psw" type="password" placeholder="Password" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check name = 'check' type="checkbox" label="Check me out" />
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-    </Form>
+      <MDBRow>
+
+        <MDBCol col='10' md='6'>
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" className="img-fluid" alt="Phone image" />
+        </MDBCol>
+
+        <MDBCol col='4' md='6'>
+          <h1>Login</h1><br/>
+          <form> {/*method = 'post' onSubmit={handleLogin}*/} 
+            <MDBInput name="username" wrapperClass='mb-4' placeholder='Username' id='usr' type='text' size="lg"/>
+            <MDBInput name="password" wrapperClass='mb-4' placeholder='Password' id='psw' type='password' size="lg"/>
+
+
+            <div className="d-flex justify-content-between mx-4 mb-4">
+              <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
+              <a href="#">Forgot password?</a>
+            </div>
+            <Button className="mb-4 w-100" type="submit" href="/" onClick={handleLogin}>Sign in</Button>
+          </form>
+        </MDBCol>
+
+      </MDBRow>
+
+    </MDBContainer>
   );
 }
 
 export default Login;
+
+
