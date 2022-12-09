@@ -11,7 +11,6 @@ import NavigationBar from './component/NavigationBar/NavigationBar'
 import User from './page/User/User'
 
 import React from 'react';
-import VerticalBar from './component/VerticalBar/VerticalBar'
 
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 
