@@ -1,3 +1,15 @@
+CREATE USER IF NOT EXISTS 'manufacturing'@'localhost' IDENTIFIED BY 'kimngan1704';
+GRANT CREATE ON manufacturing.* TO 'roy'@'localhost';
+GRANT ALL PRIVILEGES ON manufacturing.* TO 'roy'@'localhost';
+FLUSH PRIVILEGES;
+
+
+alter user 'root'@'localhost' identified with mysql_native_password by 'kimngan1704';
+
+
+
+
+
 /* EmployeeType:
     1: Analyst
     2: Manager
@@ -65,9 +77,7 @@ SELECT NID, PID
 FROM Notification
 WITH LOCAL CHECK OPTION;
 
-drop user if exists `manufacturing`@`localhost`;
-CREATE USER `manufacturing`@`localhost`  IDENTIFIED BY '123456' ;
-grant all privileges on manufacturing.* to `manufacturing`@`localhost`;
+
 
 drop role if exists `ManagerRole`@`localhost`;
 CREATE ROLE `ManagerRole`@`localhost`;
@@ -88,9 +98,11 @@ GRANT SELECT ON MANUFACTURING.Product TO `WorkerRole`@`localhost`;
 
 
 drop role if exists `DesignerRole`@`localhost`;
-CREATE ROLE `DesignerRole`;
-GRANT SELECT ON MANUFACTURING.ModelView TO `DesignerRole`;
-GRANT SELECT ON MANUFACTURING.Product TO `DesignerRole`;
+CREATE ROLE `DesignerRole`@`localhost`;
+GRANT SELECT ON MANUFACTURING.ModelView TO `DesignerRole`@`localhost`;
+GRANT SELECT ON MANUFACTURING.Product TO `DesignerRole`@`localhost`;
+
+flush privileges;
 
 -- create manager role
 CREATE USER `minh.buikim@gmail.com`@`localhost` IDENTIFIED BY '123456' ;
