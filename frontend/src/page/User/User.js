@@ -2,56 +2,28 @@
 import {Container, Table} from 'react-bootstrap';
 import React, {useState} from 'react';
 
-function User() {
-  const [data, setData] = useState(null);
-    React.useEffect(() => {
-    fetch("/user")
-      .then((res) => res.json())
-      .then((data) => {setData(data.find((e) => e['username'] === localStorage.getItem('usr')))});
-    }, []);
-  function getJob()
-  {
-    if(data.analyst)
-      return 'Analyst';
-    if(data.manager)
-      return 'Manager';
-    if(data.designer)
-      return 'Designer';
-    if(data.worker)
-      return 'Worker';
-    return 'None';
-  }
-  if (localStorage.getItem('usr') == null)
-    return (<div>Please login to visit this page</div>)
+function User({user}) {
+  //const user = {"username": "huy123", "id": 10, "ssn": "12312523", "fname": "Huy", "mname": "Anh", "lname": "Le", "position": "Designer", "bdate": "2002-09-07", "address": "KTX"};
   return (
-    <Container className = 'border border-dark rounded yuha-margin'>
+    <Container style = {{marginLeft: "300px", width: "calc(100% - 400px)", marginTop: "30px"}}>
+    <Container className = 'border border-dark rounded'>
         <Table>
             <thead>
               <tr><td>User Infomation</td><td></td></tr>
             </thead>
             <tbody>
-              <tr><td>Name</td><td> {data?show(data.fname) + ' ' + show(data.mname) + ' ' + show(data.lname):'None'} </td></tr>
-              <tr><td>ID</td><td> {data ? data.id : 'None'}</td></tr>
-              <tr><td>SSN</td><td> {data ? data.ssn : 'None'}</td></tr>
-              <tr><td>MID</td><td> {data ? data.mid : 'None'}</td></tr>
-              <tr><td>Job</td><td> {data ? getJob() : 'None'}</td></tr>
-              <tr><td>Date of birth</td><td> {data ? data.bdate.substring(0, 10) : 'None'}</td></tr>
-              <tr><td>Address</td><td> {data ? data.address : 'None'}</td></tr>
-              <tr><td>BioID</td><td> {data ? data.bioid : 'None'}</td></tr>
-              <tr><td>Username</td><td> {data ? data.username : 'None'}</td></tr>
+              <tr><td>Name</td><td> {user.fname + ' ' + user.mname + ' ' + user.lname} </td></tr>
+              <tr><td>ID</td><td> {user.id}</td></tr>
+              <tr><td>SSN</td><td> {user.ssn}</td></tr>
+              <tr><td>Position</td><td> {user.position}</td></tr>
+              <tr><td>Date of birth</td><td> {user.bdate.substring(0, 10)}</td></tr>
+              <tr><td>Address</td><td> {user.address}</td></tr>
+              <tr><td>Username</td><td> {user.username}</td></tr>
             </tbody>
         </Table>
     </Container>
+    </Container>
   );
-}
-
-
-
-function show(e)
-{
-  if (e && e !== 'null' && e !== undefined)
-    return e;
-  return '';
 }
 
 export default User;

@@ -1,0 +1,21 @@
+.project-button-group
+{
+    display: inline-block;
+    width: 50%;
+    text-align: right;
+}
+
+.project-text-group
+{
+    width: calc(50%);
+    display: inline-block;
+}
+
+.d-inline-block {
+    display: inline-block;
+}
+
+.project_name_button:hover{
+    background-color: aliceblue;
+}
+

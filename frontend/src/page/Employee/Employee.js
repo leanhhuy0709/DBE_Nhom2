@@ -3,17 +3,21 @@ import React, { useState } from 'react';
 import {Table} from 'react-bootstrap';
 
 function Employee({employees}) {
+  const [myEmployees, setMyEmployees] = useState(employees);
+  const handleSearch = () => {
+    let kw = document.getElementById("search_input").value;
+    setMyEmployees(employees.filter((item)=>item.fname.toLowerCase().includes(kw.toLowerCase())));
+  }
   return (
   <Container style = {{marginLeft: "300px", width: "calc(100% - 400px)", marginTop: "30px"}}>
-    <Container className="p-3 m-3" style={{backgroundColor: "red"}}>
-    <b style={{fontSize: "26px"}}>Employee </b>
-    <div style={{display: "inline-block"}}>
-    <Button className="fw-bold">+</Button> 
-    <Button><i className="fa fa-search"/></Button>
+    <Container className="p-3 m-3">
+    <div className='project-text-group'><b style={{fontSize: "26px"}}>Employee </b>
+    <input id="search_input" placeholder="Search by name" className='input d-inline-block p-2 rounded ms-2'/>
+    <Button className='d-inline-block' style = {{marginLeft: "10px"}} onClick = {handleSearch}><i className="fa fa-search"/></Button>
     </div>
     
     </Container>
-    <Table striped style = {{width: "80%"}}>
+    <Table striped style = {{width: "100%"}}>
       <thead>
         <tr>
           <th>ID</th>
@@ -27,7 +31,7 @@ function Employee({employees}) {
         </tr>
       </thead>
       <tbody>
-        {employees.map((item, idx) => (
+        {myEmployees.map((item, idx) => (
           <tr>
           <td>{item.id}</td>
           <td>{item.fname}</td>
@@ -37,7 +41,6 @@ function Employee({employees}) {
           <td>{item.bdate}</td>
           <td>{item.address}</td>
           <td>{item.salary}</td>
-          <td><Button><i className="gg-trash"/></Button></td>
         </tr>
         ))}
 

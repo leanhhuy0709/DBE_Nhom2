@@ -9,8 +9,9 @@ import './navigationbar.css';
 function NavigationBar({user}) {
     return (
     <Navbar expand="lg" className="bg-blue">
-        <Container>
-            <Navbar.Brand style={{color: "white"}} href="/">OEM</Navbar.Brand>
+        <Container className = "m-2">
+            
+            <Navbar.Brand style={{color: "white"}} href="/"><i className='fas fa-user-alt ms-5 float-left' style={{fontSize: "25px"}}/> OEM</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
@@ -18,7 +19,9 @@ function NavigationBar({user}) {
             <Nav>
                 <Nav.Link style={{color: "white"}}>{user?user.fname + ' ' + user.mname + ' ' + user.lname:''}</Nav.Link>
                 <Nav.Link style={{color: "white"}}>{user?user.position:''}</Nav.Link>
-                <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+                <NavDropdown title={
+        <span className="text-white my-auto">More</span>
+    } id="basic-nav-dropdown">
                 <NavDropdown.Item href="/user">User Info</NavDropdown.Item>
                 <NavDropdown.Item href="/" onClick = {()=>(localStorage.removeItem('usr'))}>
                     {localStorage.getItem('usr') == null?'Login' : 'Logout'}
