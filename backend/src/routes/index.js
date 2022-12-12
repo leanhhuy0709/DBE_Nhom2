@@ -6,9 +6,9 @@ const authenRoute = require("./authenticateRoute");
 const { authUser, authManger, authWorker, authAnalyst, authDesigner } = require('../middleware/authentication')
 function route(app){
     app.use('/manager',authUser,authManger, managerRoute)
-    app.use('/designer',workerRoute)
-    app.use('/worker',designerRoute)
-    app.use('/user',userRoute)
+    app.use('/designer',authUser,authDesigner ,workerRoute)
+    app.use('/worker',authUser ,authWorker,designerRoute)
+    app.use('/user',authUser,userRoute)
     app.use('/authen',authenRoute)
 }
 
