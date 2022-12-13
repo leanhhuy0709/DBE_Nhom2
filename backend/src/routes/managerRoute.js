@@ -5,9 +5,9 @@ const managerController = require("../controllers/managerController");
 
 
 route.get('/project',managerController.showProject);
-route.get('/employee',managerController.showEmployee);
 route.get('/product',managerController.showProduct);
-route.get('/activity',managerController.showActivity);
+route.get('/group',managerController.showActivity);
+route.get('/model',managerController.showUser);
 route.get('/',managerController.index);
 
 
