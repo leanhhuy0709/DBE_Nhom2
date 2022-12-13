@@ -1,7 +1,36 @@
-const {connection} = require('../db/connect')
+const mysql = require("mysql");
+// const user = {
+//   DB_USERNAME: "root",
+//   DB_NAME : "manufacturing",
+//   DB_PASSWORD : "1234",
+// }
+// const connection = mysql.createConnection({
+//   host: "localhost",
+//   user: user.DB_USERNAME,
+//   password: user.DB_PASSWORD,
+//   database: user.DB_NAME,
+//   multipleStatements: true
+// })
+// const start = async ()=>{
+//   try {
+//   await connection.connect();
+//   console.log("Database connected! Username: ", user.username);
+//   } catch (error) {
+//   console.log(error.message);
+//   }
+// }
+// start();
+const  { connectSuccess} = require('../db/connect')
+const user = {
+  DB_USERNAME: "root",
+  DB_PASSWORD : "1234",
+  DB_NAME : "manufacturing",
+}
+const connection = connectSuccess(user);
 
 const getProject = () => {
-    var query = "call ShowProject();"
+  console.log(connection);
+    const query = "call ShowProject();"
     return new Promise((resolve, reject) => {
       connection.query(query, (err, result) => {
         if (err) reject(err);
