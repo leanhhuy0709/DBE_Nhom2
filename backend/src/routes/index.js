@@ -1,5 +1,5 @@
 const managerRoute = require("./managerRoute.js");
-//const workerRoute = require("./workerRoute.js");
+const workerRoute = require("./workerRoute.js");
 const designerRoute = require("./designerRoute.js");
 //const userRoute = require("./userRoute.js");
 const authenRoute = require("./authenticateRoute");
@@ -13,7 +13,7 @@ const {
 function route(app) {
   app.use("/manager", authUser, authManger, managerRoute);
   app.use("/designer", authUser, authDesigner, designerRoute);
-  // app.use("/worker", authUser, authWorker, designerRoute);
+  app.use("/worker", authUser, authWorker, workerRoute);
   // app.use("/user", authUser, userRoute);
   app.use("/authen", authenRoute);
 }

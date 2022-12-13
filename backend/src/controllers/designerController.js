@@ -61,8 +61,8 @@ module.exports.getProjectInfo = async (req, res) => {
     })
     .catch((err) => res.json({ msg: err.message }));
 };
-
-module.exports.addOrder = async (req, res) =>
+//----------------------------------------------------------------
+module.exports.addModel = async (req, res) =>
 {
   addModel()
   .then((result) => {

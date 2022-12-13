@@ -34,7 +34,7 @@ const manager = [
 ];
 const worker = [
   {
-    username: "huy123",
+    username: "huy1234",
     password: "123456",
     role: "worker",
     id: "100005",

@@ -108,6 +108,16 @@ const getProduct = (id) => {
   });
 };
 
+const addModel = () => {
+  var query = "call get_product_of_designer(?);";
+  return new Promise((resolve, reject) => {
+    connection.query(query, [id], (err, result) => {
+      if (err) reject(err);
+      else resolve(result);
+    });
+  });
+};
+
 module.exports = {
   getModel,
   getProject,
@@ -117,4 +127,5 @@ module.exports = {
   getProjectSupplier,
   getGroup,
   getProduct,
+  addModel,
 };

@@ -9,5 +9,5 @@ route.get("/product", designerController.getProduct);
 route.get("/group", designerController.getGroup);
 route.get("/model", designerController.getModel);
 route.get("/projectInfo", designerController.getProjectInfo);
-route.post("/addOrder", designerController.addOrder);
+route.post("/addModel", designerController.addModel);
 module.exports = route;
