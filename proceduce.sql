@@ -182,16 +182,18 @@ CREATE PROCEDURE insert_product(IN name_ VARCHAR(200), IN description_ VARCHAR(5
     END \\ 
 DELIMITER ;
 
-DELIMITER \\
-DROP PROCEDURE IF EXISTS insert_activity;
-CREATE PROCEDURE insert_project(IN name_ VARCHAR(200), IN description_ VARCHAR(500), IN cost_efficiency_ VARCHAR(100), IN cost_ FLOAT)
-	BEGIN
-		DECLARE pid_ int;
-		SET pid_ = (SELECT IFNULL(MAX(PID)+1, 1) FROM Project ORDER BY PID ASC);
-		INSERT INTO Project
-		VALUES (pid_, name_, description_, cost_efficiency_, cost_);
-    END \\
-DELIMITER ;
+
+-- -- cần 
+-- DELIMITER \\
+-- DROP PROCEDURE IF EXISTS insert_activity;
+-- CREATE PROCEDURE insert_activity()
+-- 	BEGIN
+-- 		DECLARE pid_ int;
+-- 		SET pid_ = (SELECT IFNULL(MAX(PID)+1, 1) FROM Project ORDER BY PID ASC);
+-- 		INSERT INTO Project
+-- 		VALUES (pid_, name_, description_, cost_efficiency_, cost_);
+--     END \\
+-- DELIMITER ;
 
 
 -- lấy group thuộc về project
@@ -200,7 +202,7 @@ DROP PROCEDURE IF EXISTS get_group_of_project;
 CREATE PROCEDURE get_group_of_project(IN pid_ int)
 	BEGIN
 		select GNumber, Name, Location
-		from Group
+		from `Group`
 		where Group.PID = pid_;
     END \\
 DELIMITER ;
@@ -328,3 +330,87 @@ CREATE PROCEDURE get_tasks_of_group(in GNumber int, in PID int)
     END \\
 DELIMITER ;
 
+-- lấy danh sách group mà employee tham gia
+DELIMITER \\
+DROP PROCEDURE IF EXISTS get_group_of_employee;
+CREATE PROCEDURE get_group_of_employee(in EmployeeID int)
+	BEGIN
+		select Group.GNumber, Group.PID, Name, Location
+		from `Group`, Joins
+		where Group.GNumber =Joins.GNumber and Group.PID =Joins.PID and Joins.ID=EmployeeID;
+    END \\
+DELIMITER ;
+
+
+-- lấy danh sách project mà employee tham gia
+DELIMITER \\
+DROP PROCEDURE IF EXISTS get_project_of_employee;
+CREATE PROCEDURE get_project_of_employee(in EmployeeID int)
+	BEGIN
+		select Project.PID, Project.Name, Project.Description, Project.CostEfficiency, 
+				Project.Cost, Project.ID, Project.StartDate, Project.Period
+		from Project,Joins,`Group`
+		where Group.GNumber=Joins.GNumber and Group.PID=Joins.PID 
+				and Joins.ID=EmployeeID and Project.PID=Group.PID;
+    END \\
+DELIMITER ;
+
+-- CREATE TABLE Employee (
+-- 	ID INTEGER PRIMARY KEY,
+-- 	SSN VARCHAR(10) UNIQUE NOT NULL,
+-- 	FName VARCHAR(50),
+-- 	MName VARCHAR(50),
+-- 	LName VARCHAR(50),
+-- 	BDate DATE,
+-- 	Address VARCHAR(200),
+-- 	Salary FLOAT CHECK (Salary>=0),
+-- 	EmployeeType enum('Employee','Analyst','Manager','Designer','Worker') default 'Employee'
+-- );
+
+-- lấy danh sách model của designer
+DELIMITER \\
+DROP PROCEDURE IF EXISTS get_model_of_designer;
+CREATE PROCEDURE get_model_of_designer(in DesignerID int)
+	BEGIN
+		select MNumber,PID,ID,DateCreated
+		from Model
+		where Model.ID=DesignerID;
+    END \\
+DELIMITER ;
+
+-- CREATE TABLE Model (
+-- 	MNumber INTEGER,
+-- 	PID INTEGER,
+-- 	ID INTEGER,
+-- 	DateCreated DATE,
+-- 	PRIMARY KEY (MNumber, PID, ID),
+-- 	FOREIGN KEY (PID) REFERENCES Product(PID) ON DELETE CASCADE ON UPDATE CASCADE,
+-- 	FOREIGN KEY (ID) REFERENCES Designer(ID) ON DELETE CASCADE ON UPDATE CASCADE
+-- );
+
+-- lấy danh sách equipment của worker
+DELIMITER \\
+DROP PROCEDURE IF EXISTS get_equipment_of_worker;
+CREATE PROCEDURE get_equipment_of_worker(in WorkerID int)
+	BEGIN
+		select PID, ASession
+		from Works_on, wSession
+		where Works_on.ID=WorkerID and wSession.ID=Works_on.ID and wSession.PID=Works_on.PID;
+    END \\
+DELIMITER ;
+
+-- CREATE TABLE Works_on (
+-- 	ID INTEGER,
+-- 	PID INTEGER,
+-- 	PRIMARY KEY (ID, PID),
+-- 	FOREIGN KEY (ID) REFERENCES Worker(ID) ON DELETE CASCADE ON UPDATE CASCADE,
+-- 	FOREIGN KEY (PID) REFERENCES Equipment(PID) ON DELETE CASCADE ON UPDATE CASCADE
+-- );
+
+-- CREATE TABLE wSession (
+-- 	ID INTEGER,
+-- 	PID INTEGER,
+-- 	ASession VARCHAR(20),
+-- 	PRIMARY KEY (ID, PID, ASession),
+-- 	FOREIGN KEY (ID, PID) REFERENCES works_on(ID, PID) ON DELETE CASCADE ON UPDATE CASCADE
+-- );
