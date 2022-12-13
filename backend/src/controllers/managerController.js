@@ -1,48 +1,76 @@
-const managerModel = require('../models/managerModel');
-//write by Huyyyyy
-//const {connectDB} = require("../db/connect");
-//
+const {
+  getProject,
+  addNewProject,
+  delProject,
+  getProjectGroup,
+  getProjectLeader,
+  getProjectModel,
+  getProjectSupplier,
+  getEmployee,
+  getProduct,
+} = require("../models/managerModel");
 
-module.exports.index = async (req,res) => {
-        res.send("manager'home")
-}
+module.exports.index = async (req, res) => {
+  res.send("manager'home");
+};
 
-module.exports.showProject = async (req,res) => {
-        //console.log(req.user);
-        managerModel.getProjectTable().then((data)=>{
-                console.log(data)
-                res.send(data);
+module.exports.showProject = async (req, res) => {
+  getProject()
+    .then((result) => {
+      return res.json(result);
+    })
+    .catch((err) => res.json({ msg: err.message }));
+};
 
-        });
-        //res.send({"msg": "Project Data"})
-        //res.send({'manager view Project page':data})
-}
+module.exports.deleteProject = async (req, res) => {
+  const pid = req.query.pid;
+  delProject(pid)
+    .then((result) => {
+      return res.json(result);
+    })
+    .catch((err) => res.json({ msg: err.message }));
+};
 
-module.exports.showLeaderOfProject = async (req,res) => {
-        res.send({'manager view Project page':data})
-}
+module.exports.showProjectInfo = async (req, res) => {
+  const pid = req.query.pid;
+  Promise.all([
+    getProjectGroup(pid),
+    getProjectLeader(pid),
+    getProjectModel(pid),
+    getProjectSupplier(pid),
+  ])
+    .then((result) => {
+      return res.json(result);
+    })
+    .catch((err) => res.json({ msg: err.message }));
+};
 
-module.exports.showModelOfProject = async (req,res) => {
-        res.send({'manager view Project page':data})
-}
+module.exports.addProject = async (req, res) => {
+  const project = [
+    req.body.pname,
+    req.body.description,
+    req.body.cost_eff,
+    req.body.cost,
+  ];
+  addNewProject(project)
+    .then((result) => {
+      return res.json(result);
+    })
+    .catch((err) => res.json({ msg: err.message }));
+};
 
-module.exports.showGroupOfProject = async (req,res) => {
-    res.send({'manager view Project page':data})
-}
+module.exports.showEmployee = async (req, res) => {
+  getEmployee()
+    .then((result) => {
+      return res.json(result);
+    })
+    .catch((err) => res.json({ msg: err.message }));
+};
 
-module.exports.showOfProject = async (req,res) => {
-    res.send({'manager view Project page':data})
-}
-
-
-module.exports.showEmployee=async (req,res)=>{
-        res.send('manager view Employee page')
-}
-
-module.exports.showProduct=async function (req,res){
-        res.send('manager view Product page')
-}
-
-module.exports.showActivity= async function (req,res){
-        res.send('manager view Activity page')
-    }
+module.exports.showProduct = async (req, res) => {
+  getProduct()
+    .then((result) => {
+      return res.json(result);
+    })
+    .catch((err) => res.json({ msg: err.message }));
+};
