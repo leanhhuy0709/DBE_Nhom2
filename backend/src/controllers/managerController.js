@@ -47,6 +47,7 @@ module.exports.showProjectInfo = async (req, res) => {
 
 module.exports.addProject = async (req, res) => {
   const project = [
+    req.body.id,
     req.body.pname,
     req.body.description,
     req.body.cost_eff,

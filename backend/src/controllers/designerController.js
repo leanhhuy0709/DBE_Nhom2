@@ -1,32 +1,72 @@
-const Designer = require('../models/designerModel');
+const {
+  getProject,
+  getGroup,
+  getProduct,
+  getModel,
+  getProjectGroup,
+  getProjectLeader,
+  getProjectModel,
+  getProjectSupplier
+} = require("../models/designerModel");
 
-class DesignerController {
-  index(req, res) {
-   res.send("home designer")
-  }
+module.exports.index = async (req, res) => {
+  res.send("manager'home");
+};
 
-  project(req, res) {
-    Designer.project(req.body, (result) => {
-        res.send(result);
-    });
-  }
+module.exports.getModel = async (req, res) => {
+  getModel(req.query.id)
+    .then((result) => {
+      return res.json(result);
+    })
+    .catch((err) => res.json({ msg: err.message }));
+};
 
-  product(req, res) {
-    Designer.product(req.body, (result) => {
-        res.send(result);
-    });
-  }
+module.exports.getProject = async (req, res) =>
+{
+  getProject(req.query.id)
+  .then((result) => {
+    return res.json(result);
+  })
+  .catch((err) => res.json({ msg: err.message }));
+};
 
-  model(req, res) {
-    Designer.model(req.body, (result) => {
-        res.send(result);
-    });
-  }
+module.exports.getProduct = async (req, res) =>
+{
+  getProduct(req.query.id)
+  .then((result) => {
+    return res.json(result);
+  })
+  .catch((err) => res.json({ msg: err.message }));
+};
 
-  group(req, res) {
-    Designer.group(req.body, (result) => {
-        res.send(result);
-    });
-  }
-}
-module.exports = new DesignerController();
+module.exports.getGroup = async (req, res) =>
+{
+  getGroup(req.query.id)
+  .then((result) => {
+    return res.json(result);
+  })
+  .catch((err) => res.json({ msg: err.message }));
+};
+
+module.exports.getProjectInfo = async (req, res) => {
+  const pid = req.query.pid;
+  Promise.all([
+    getProjectGroup(pid),
+    getProjectLeader(pid),
+    getProjectModel(pid),
+    getProjectSupplier(pid),
+  ])
+    .then((result) => {
+      return res.json(result);
+    })
+    .catch((err) => res.json({ msg: err.message }));
+};
+
+module.exports.addOrder = async (req, res) =>
+{
+  addModel()
+  .then((result) => {
+    return res.json(result);
+  })
+  .catch((err) => res.json({ msg: err.message }));
+};
