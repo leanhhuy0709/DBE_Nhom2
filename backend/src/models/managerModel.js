@@ -39,20 +39,44 @@ const getProject = () => {
     })
   }
 
-  const getProjectInfo = (pid) => {
+  const getProjectGroup = (pid) => {
     let query = "call get_group_of_project(?);"
-    const group = connection.query(query, [pid]);
+    return new Promise((resolve, reject) => {
+      connection.query(query, [pid], (err, result) => {
+        if (err) reject(err);
+        else resolve(result)
+      })
+    })
+  }
 
-    query = "call get_leader_of_project(?);"
-    const leader = connection.query(query, [pid]);
+  const getProjectLeader = (pid) => {
+    let  query = "call get_leader_of_project(?);"
+    return new Promise((resolve, reject) => {
+      connection.query(query, [pid], (err, result) => {
+        if (err) reject(err);
+        else resolve(result)
+      })
+    })
+  }
 
-    query = "call get_model_of_project(?);"
-    const model = connection.query(query, [pid]);
+  const getProjectModel = (pid) => {
+    let  query = "call get_model_of_project(?);"
+    return new Promise((resolve, reject) => {
+      connection.query(query, [pid], (err, result) => {
+        if (err) reject(err);
+        else resolve(result)
+      })
+    })
+  }
 
-    query = "call get_supplier_of_project(?);"
-    const supplier = connection.query(query, [pid]);
-
-    return Promise.all({group : group, model : model, supplier : supplier, leader : leader})
+  const getProjectSupplier = (pid) => {
+    let  query = "call get_supplier_of_project(?);"
+    return new Promise((resolve, reject) => {
+      connection.query(query, [pid], (err, result) => {
+        if (err) reject(err);
+        else resolve(result)
+      })
+    })
   }
 
   const delProject = (pid) => {
@@ -98,7 +122,10 @@ module.exports = {
     getProject,
     addNewProject,
     delProject,
-    getProjectInfo,
+    getProjectGroup,
+    getProjectLeader,
+    getProjectModel,
+    getProjectSupplier,
     getEmployee,
     getProduct
 }
