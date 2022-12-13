@@ -108,10 +108,10 @@ const getProduct = (id) => {
   });
 };
 
-const addModel = () => {
-  var query = "call get_product_of_designer(?);";
+const addModel = (pid, id) => {
+  var query = "call insert_model(?,?);";
   return new Promise((resolve, reject) => {
-    connection.query(query, [id], (err, result) => {
+    connection.query(query, [pid,id], (err, result) => {
       if (err) reject(err);
       else resolve(result);
     });

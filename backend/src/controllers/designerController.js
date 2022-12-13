@@ -64,7 +64,7 @@ module.exports.getProjectInfo = async (req, res) => {
 //----------------------------------------------------------------
 module.exports.addModel = async (req, res) =>
 {
-  addModel()
+  addModel(req.body.pid, req.body.id)
   .then((result) => {
     return res.json(result);
   })

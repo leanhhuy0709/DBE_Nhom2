@@ -108,10 +108,10 @@ const getProduct = (id) => {
   });
 };
 
-const addComment = () => {
-  var query = "call get_product_of_designer(?);";
+const addComment = (EquipmentID, NID, comment) => {
+  var query = "call insert_comment(?, ?, ?);";
   return new Promise((resolve, reject) => {
-    connection.query(query, [id], (err, result) => {
+    connection.query(query, [EquipmentID, NID, comment], (err, result) => {
       if (err) reject(err);
       else resolve(result);
     });
