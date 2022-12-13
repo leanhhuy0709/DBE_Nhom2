@@ -39,7 +39,7 @@ const login = async (req, res) => {
   } catch (error) {
     console.log(error.message);
   }
-  res.status(StatusCodes.OK).json({ msg: "Login sucess", token, refreshToken });
+  res.status(StatusCodes.OK).json({ msg: "Login sucess",user });
 };
 
 const logout = (req, res) => {

@@ -1,9 +1,15 @@
-
 const analyst = [
     {
-        username: "analyst",
+        username: "huy123",
         password: "123456",
         role: "analyst",
+        "id": "10",
+        "ssn": "12312523",
+        "fname": "Huy",
+        "mname": "Anh",
+        "lname": "Le",
+        "bdate": "2002-09-07", 
+        "address": "KTX",
         DB_USERNAME: "root",
         DB_PASSWORD : "1234",
         DB_NAME : "company"
@@ -11,9 +17,16 @@ const analyst = [
 ];
 const manager = [
     {
-        username: "manager",
+        username: "huy123",
         password: "123456",
         role: "manager",
+        "id": "10",
+        "ssn": "12312523",
+        "fname": "Huy",
+        "mname": "Anh",
+        "lname": "Le",
+        "bdate": "2002-09-07", 
+        "address": "KTX",
         DB_USERNAME: "root",
         DB_PASSWORD : "1234",
         DB_NAME : "company"
@@ -21,9 +34,16 @@ const manager = [
 ];
 const worker = [
     {
-        username: "worker",
+        username: "huy123",
         password: "123456",
         role: "worker",
+        "id": "10",
+        "ssn": "12312523",
+        "fname": "Huy",
+        "mname": "Anh",
+        "lname": "Le",
+        "bdate": "2002-09-07", 
+        "address": "KTX",
         DB_USERNAME: "root",
         DB_PASSWORD : "1234",
         DB_NAME : "company"
@@ -31,9 +51,16 @@ const worker = [
 ];
 const designer = [
     {
-        username: "designer",
+        username: "huy123",
         password: "123456",
         role: "designer",
+        "id": "10",
+        "ssn": "12312523",
+        "fname": "Huy",
+        "mname": "Anh",
+        "lname": "Le",
+        "bdate": "2002-09-07", 
+        "address": "KTX",
         DB_USERNAME: "root",
         DB_PASSWORD : "1234",
         DB_NAME : "company"
