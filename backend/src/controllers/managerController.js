@@ -1,4 +1,4 @@
-const managerModel = require('..\\models\\managerModel');
+const managerModel = require('../models/managerModel');
 //write by Huyyyyy
 //const {connectDB} = require("../db/connect");
 //
