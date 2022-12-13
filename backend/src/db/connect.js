@@ -1,9 +1,10 @@
 const mysql = require("mysql");
 require("dotenv").config();
 
+let connection = "";
 
 const connectDB = async (user) => {
-  const connection = mysql.createConnection({
+  connection = mysql.createConnection({
     host: "localhost",
     user: user.DB_USERNAME,
     password: user.DB_PASSWORD,
@@ -13,4 +14,4 @@ const connectDB = async (user) => {
   return connection.connect();
 };
 
-module.exports = {connectDB};
+module.exports = {connectDB, connection};
