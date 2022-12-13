@@ -1,6 +1,6 @@
 const analyst = [
     {
-        username: "huy1",
+        username: "huy123",
         password: "123456",
         role: "analyst",
         "id": "10",
@@ -12,13 +12,13 @@ const analyst = [
         "address": "KTX",
         DB_USERNAME: "root",
         DB_PASSWORD : "1234",
-        DB_NAME : "manufacturing",
+        DB_NAME : "company"
     }
 ];
 const manager = [
     {
-        username: "huy2",
-        password: "123456",
+        username: "huymanager",
+        password: "1234567",
         role: "manager",
         "id": "10",
         "ssn": "12312523",
@@ -28,13 +28,13 @@ const manager = [
         "bdate": "2002-09-07", 
         "address": "KTX",
         DB_USERNAME: "root",
-        DB_PASSWORD : "1234",
-        DB_NAME : "manufacturing",
+        DB_PASSWORD : "kimngan1704",
+        DB_NAME : "manufacturing"
     }
 ];
 const worker = [
     {
-        username: "huy3",
+        username: "huy123",
         password: "123456",
         role: "worker",
         "id": "10",
@@ -45,13 +45,13 @@ const worker = [
         "bdate": "2002-09-07", 
         "address": "KTX",
         DB_USERNAME: "root",
-        DB_PASSWORD : "1234",
-        DB_NAME : "manufacturing",
+        DB_PASSWORD : "kimngan1704",
+        DB_NAME : "manufacturing"
     }
 ];
 const designer = [
     {
-        username: "huy4",
+        username: "huy123",
         password: "123456",
         role: "designer",
         "id": "10",
@@ -62,8 +62,8 @@ const designer = [
         "bdate": "2002-09-07", 
         "address": "KTX",
         DB_USERNAME: "root",
-        DB_NAME : "manufacturing",
-        DB_PASSWORD : "1234",
+        DB_PASSWORD : "kimngan1704",
+        DB_NAME : "manufacturing"
     }
 ];
 

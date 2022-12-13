@@ -1,12 +1,12 @@
 const { StatusCodes } = require("http-status-codes");
 const { BadRequestError, UnauthenticatedError } = require("../errors");
-const { getUser } = require("../../account/account");
+const { getUser } = require('../../account/account')
 const {
   createJWT,
   attachCookiesToResponse,
   createRefreshJWT,
 } = require("../services/jwt");
-const { connectSuccess } = require("../db/connect");
+const { connectDB, connectRightDb } = require("../db/connect")
 
 const login = async (req, res) => {
   const { username, password } = req.body;
@@ -25,6 +25,7 @@ const login = async (req, res) => {
     name: user.username,
     role: user.role,
   });
+  
   // create new refrestoken
   const refreshToken = createRefreshJWT({
     name: user.username,
@@ -34,15 +35,12 @@ const login = async (req, res) => {
   attachCookiesToResponse({ res, token, refreshToken });
 
   try {
-    const connection = connectSuccess(user)
-    console.log(connection);
-    await connection.connect();
+    await connectDB(user);
     console.log("Database connected! Username: ", user.username);
   } catch (error) {
     console.log(error.message);
   }
-
-  res.status(StatusCodes.OK).json({ msg: "Login sucess", user });
+  res.status(StatusCodes.OK).json({ msg: "Login sucess",user });
 };
 
 const logout = (req, res) => {
@@ -57,4 +55,5 @@ const logout = (req, res) => {
   res.status(StatusCodes.OK).json({ msg: "Logout sucess" });
 };
 
-module.exports = { login, logout };
+module.exports = {  login, logout };
+

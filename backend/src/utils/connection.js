@@ -1,4 +1,4 @@
-const mysql = require('mysql2/promise');
+const mysql = require('mysql2\\promise');
 
 // var connection = mysql.createConnection({
 //     host: 'localhost',
@@ -18,20 +18,20 @@ const mysql = require('mysql2/promise');
 //     }
 // })
 
-// async function testConnection(uname, pwd) {
-//     try {
-//         await mysql.createConnection({
-//             host: "localhost",
-//             database: "manufacturing",
-//             port: 3306,
-//             user: uname,
-//             password: pwd,
-//         });
-//         return true;
-//     } catch (e) {
-//         return false;
-//     }
-// }
+async function testConnection(uname, pwd) {
+    try {
+        await mysql.createConnection({
+            host: "localhost",
+            database: "manufacturing",
+            port: 3306,
+            user: uname,
+            password: pwd,
+        });
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
 
 async function makeConnection(uname, pwd) {
     try {
@@ -52,6 +52,7 @@ async function makeConnection(uname, pwd) {
 
 
 module.exports = {
+    testConnection,
     makeConnection
 };
 

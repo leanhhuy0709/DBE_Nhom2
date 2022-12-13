@@ -29,12 +29,12 @@ const authUser = async (req, res, next) => {
     if (!isAuthenticated(token, refreshToken)) {
     // create new token
     const token = createJWT({
-      name: payLoad.username,
+      name: payLoad.name,
       role: payLoad.role,
     });
     // create new refrestoken
     const refreshToken = createRefreshJWT({
-      name: payLoad.username,
+      name: payLoad.name,
       role: payLoad.role,
     });
 
@@ -42,7 +42,7 @@ const authUser = async (req, res, next) => {
     }
     // attach the user to the job route
     req.user = {
-      name: payLoad.username,
+      name: payLoad.name,
       role: payLoad.role,
     };
   } catch (error) {

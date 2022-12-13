@@ -1,14 +1,24 @@
-const db = require('../utils/connection');
+const mysql = require("mysql");
 
-console.log(db);
-var connect = db.makeConnection('root','kimngan1704');
-db.query('SELECT * FROM GROUP',
-    (error) =>{
-        if(error){
-            console.log(error.message);
-        }
-        else
-        {
-            "Thanh cong"
-        }
+const { connectSuccess } = require("../db/connect");
+const user = {
+  DB_USERNAME: "hung.bui@gmail.com",
+  DB_PASSWORD: "123456",
+  DB_NAME: "manufacturing",
+};
+const connection = connectSuccess(user);
+
+// tai khoan khac dk
+class Designer{};
+const getProject = () => {
+    console.log(connection);
+    const query = "call ShowProject();";
+    return new Promise((resolve, reject) => {
+      connection.query(query, (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+      });
     });
+  };
+
+  
