@@ -1,202 +1,86 @@
-const { makeConnection } = require("../utils/connection");
-
-const connect = makeConnection('manufacturing','123456');
-
-
-async function getProjectTable() {
-    db =  await connect;
-    strQurery = 'call ShowProject();';
-    return db.query(strQurery)
-            .then(([data,_])=>data)
-            .catch(console.log)
+const mysql = require("mysql");
+// const user = {
+//   DB_USERNAME: "root",
+//   DB_NAME : "manufacturing",
+//   DB_PASSWORD : "1234",
+// }
+// const connection = mysql.createConnection({
+//   host: "localhost",
+//   user: user.DB_USERNAME,
+//   password: user.DB_PASSWORD,
+//   database: user.DB_NAME,
+//   multipleStatements: true
+// })
+// const start = async ()=>{
+//   try {
+//   await connection.connect();
+//   console.log("Database connected! Username: ", user.username);
+//   } catch (error) {
+//   console.log(error.message);
+//   }
+// }
+// start();
+const  { connectSuccess} = require('../db/connect')
+const user = {
+  DB_USERNAME: "root",
+  DB_PASSWORD : "1234",
+  DB_NAME : "manufacturing",
 }
+const connection = connectSuccess(user);
 
-async function getProductTable() {
-    db =  await connect;
-    strQurery = 'call ShowProduct();';
-    return db.query(strQurery)
-            .then(([data,_])=>data)
-            .catch(console.log)
-}
+const getProject = () => {
+  console.log(connection);
+    const query = "call ShowProject();"
+    return new Promise((resolve, reject) => {
+      connection.query(query, (err, result) => {
+        if (err) reject(err);
+        else resolve(result)
+      })
+    })
+  }
 
-async function getActivityTable() {
-    db =  await connect;
-    strQurery = 'call ShowActivity();';
-    return db.query(strQurery)
-            .then(([data,_])=>data)
-            .catch(e=>{
-                console.log(e);
-                return null;
-            })
-}
+  const getProjectInfo = (pid) => {
+    let query = "call get_group_of_project(?);"
+    const group = connection.query(query, [pid]);
 
+    query = "call get_leader_of_project(?);"
+    const leader = connection.query(query, [pid]);
 
-async function deleteProject(PID){
-    db =  await connect;
-    strQurery = `call RemoveProject(${PID});`;
-    return db.query(strQurery)
-            .then((_) => true)
-            .catch(e=>{
-                console.log('Không thể delete project',PID);
-                console.log(e);
-                return false;
-            })
-}
+    query = "call get_model_of_project(?);"
+    const model = connection.query(query, [pid]);
 
+    query = "call get_supplier_of_project(?);"
+    const supplier = connection.query(query, [pid]);
 
-async function insertProject(data){
-    const {PID, Name, Description, CostEfficiency, Cost } = data;
-    db =  await connect;
-    strQurery = `call insert_project(${PID},'${Name}','${Description}','${CostEfficiency}',${Cost});`;
-    return db.query(strQurery)
-            .then((_) => true)
-            .catch(e=>{
-                console.log('Không thể insert project',Name);
-                console.log(e);
-                return false;
-            })
-}
+    return Promise.all({group : group, model : model, supplier : supplier, leader : leader})
+  }
 
+  const delProject = (pid) => {
+    var query = "call RemoveProject(?);"
+    return new Promise((resolve, reject) => {
+      connection.query(query, [pid], (err, result) => {
+        if (err) reject(err);
+        else resolve(result)
+      })
+    })
+  }
 
-//id, Name, start day, period, role
-async function getLeaderOFProject(Name){
-    db =  await connect;
-    strQurery = `call get_leader_of_project('${Name}');`;
-    return db.query(strQurery)
-            .then(([data,_])=>data)
-            .catch(e=>{
-                console.log(e);
-                return null;
-            })
-}
+  const addNewProject = (project) => {
+    var query = "call insert_project(?, ?, ?, ?);"
+    return new Promise((resolve, reject) => {
+      connection.query(query, project, (err, result) => {
+        if (err) reject(err);
+        else resolve(result)
+      })
+    })
+  }
 
-// id, number, date create, product id, designer id.
-async function getModelOFProject(Name){
-    db =  await connect;
-    strQurery = `call get_model_of_project('${Name}');`;
-    return db.query(strQurery)
-            .then(([data,_])=>data)
-            .catch(e=>{
-                console.log(e);
-                return null;
-            })
-}
-
-//id, name, location, partid,date,quantity,price
-async function getSupplierOFProject(Name){
-    db =  await connect;
-    strQurery = `call get_supplier_of_project('${Name}');`;
-    return db.query(strQurery)
-            .then(([data,_])=>data)
-            .catch(e=>{
-                console.log(e);
-                return null;
-            })
-}
-
-//number, name, location
-async function getGroupOFProject(Name){
-    db =  await connect;
-    strQurery = `call get_group_of_project('${Name}');`;
-    return db.query(strQurery)
-            .then(([data,_])=>data)
-            .catch(e=>{
-                console.log(e);
-                return null;
-            })
-}
-
-async function getEmployeeTable() {
-    db =  await connect;
-    strQurery = 'call showEmployee();';
-    return db.query(strQurery)
-            .then(([data,_])=>data)
-            .catch(console.log)
-}
-
-async function deleteEmployee(ID) {
-    db =  await connect;
-    strQurery = `delete RemoveEmployee(${ID});`;
-    return db.query(strQurery)
-            .then((_)=>true)
-            .catch(e=>{
-                console.log(e);
-                return false;
-            })
-}
-
-async function insertEmployee(data) {
-    const {ID,SSN, FName,MName,LName,BDate, Address,Salary, EmployeeType } = data
-    db =  await connect;
-    strQurery = `call insert_employee('${ID}','${SSN}','${Fname}','${Mname}','${Lname}','${BDate}','${Address}','${Salary}','${EmployeeType}');`;
-    return db.query(strQurery)
-            .then((_)=>true)
-            .catch(e=>{
-                console.log(e);
-                return false;
-            })
-}
-
-async function insertProduct(data) {
-    const {ID,Name} = data
-    db =  await connect;
-    strQurery = `call insert_product(${ID},'${Name}');`;
-    return db.query(strQurery)
-            .then((_)=>true)
-            .catch(e=>{
-                console.log(e);
-                return false;
-            })
-}
-
-async function deleteProduct(ID) {
-    db =  await connect;
-    strQurery = `call RemoveProduct(${ID});`;
-    return db.query(strQurery)
-            .then((_)=>true)
-            .catch(e=>{
-                console.log(e);
-                return false;
-            })
-}
-
-async function insertProduct(data) {
-    const {ID,Name,PID} = data
-    db =  await connect;
-    strQurery = `call insert_product(${ID},'${Name}',${PID});`;
-    return db.query(strQurery)
-            .then((_)=>true)
-            .catch(e=>{
-                console.log(e);
-                return false;
-            })
-}
-
-async function deleteProduct(ID) {
-    db =  await connect;
-    strQurery = `call delete_product(${ID});`;
-    return db.query(strQurery)
-            .then((_)=>true)
-            .catch(e=>{
-                console.log(e);
-                return false;
-            })
-}
-
-module.exports = {
-    getActivityTable,
-    getProjectTable,
-    getLeaderOFProject,
-    getModelOFProject,
-    getGroupOFProject,
-    getLeaderOFProject,
-    getSupplierOFProject,
-    deleteProject,
-    insertProject,
-    getEmployeeTable,
-    deleteEmployee,
-    insertEmployee,
-    getProductTable,
-    insertProduct,
-    deleteProduct
-};
+  const getEmployee = () => {
+    var query = "call ShowEmployee();"
+    return new Promise((resolve, reject) => {
+      connection.query(query, (err, result) => {
+        if (err) reject(err);
+        else resolve(result)
+      })
+    })
+  }
