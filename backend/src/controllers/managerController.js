@@ -1,4 +1,4 @@
-const managerModel = require('..\\models\\managerModel');
+// const managerModel = require('..\\models\\managerModel');
 
 module.exports.index = async (req,res) => {
         res.send("manager'home")
