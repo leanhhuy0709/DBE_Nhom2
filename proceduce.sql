@@ -388,6 +388,43 @@ DELIMITER ;
 -- 	FOREIGN KEY (ID) REFERENCES Designer(ID) ON DELETE CASCADE ON UPDATE CASCADE
 -- );
 
+-- lấy danh sách product của designer
+DELIMITER \\
+DROP PROCEDURE IF EXISTS get_product_of_designer;
+CREATE PROCEDURE get_product_of_designer(in DesignerID int)
+	BEGIN
+		select Model.PID as ProductID
+		from Model
+		where Model.ID=DesignerID;
+    END \\
+DELIMITER ;
+
+
+-- lấy danh sách product mà worker làm việc
+DELIMITER \\
+DROP PROCEDURE IF EXISTS get_product_of_worker;
+CREATE PROCEDURE get_product_of_worker(in WorkerID int)
+	BEGIN
+		select Produces.ProductID as ProductID 
+			from Works_on, Produces
+			where Works_on.ID=WorkerID and Works_on.PID=Produces.EquipmentID;
+    END \\
+DELIMITER ;
+
+-- CREATE TABLE Produces (
+-- 	ProductID INTEGER,
+-- 	EquipmentID INTEGER,
+-- 	ProcessID INTEGER NOT NULL,
+-- 	Status VARCHAR(20) CHECK (Status IN ('Success', 'Failure', 'Undefined')),
+-- 	Date DATE,
+-- 	Hour TIMESTAMP,
+-- 	PRIMARY KEY (ProductID, EquipmentID),
+-- 	UNIQUE (ProductID, ProcessID),
+-- 	FOREIGN KEY (ProductID) REFERENCES Product(PID) ON DELETE CASCADE ON UPDATE CASCADE,
+-- 	FOREIGN KEY (EquipmentID) REFERENCES Equipment (PID) ON DELETE CASCADE ON UPDATE CASCADE,
+-- 	FOREIGN KEY (ProcessID) REFERENCES Process (PID) ON DELETE CASCADE ON UPDATE CASCADE
+-- );
+
 -- lấy danh sách equipment của worker
 DELIMITER \\
 DROP PROCEDURE IF EXISTS get_equipment_of_worker;
